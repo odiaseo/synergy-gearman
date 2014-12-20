@@ -1,20 +1,12 @@
 SynergyGearman
 ===================
-Version 0.1.0 Created by Mike Willbanks
+Version 0.1 Created Pele Odiase Originally by Mike Willbanks
 
-Introduction
-------------
-
-SynergyGearman is a module that handles interfacing with the Gearman extension.
-This module presently can handle client and worker communication and abstracts
-portions of task handling.  The overall goal is once Zend\Console has been
-completed to integrate workers into the Console to make building out gearman
-worker models far more simplistic.
-
+ 
 Requirements
 ------------
 
-* [Zend Framework 2](https://github.com/zendframework/zf2) (beta4+)
+* [Zend Framework 2](https://github.com/zendframework/zf2)
 * [PECL Gearman](http://pecl.php.net/package/gearman)
 
 Installation
@@ -25,66 +17,23 @@ Your composer.json should include the following.
 
 	{
 	"repositories": [
-	        {
-	            "type": "package",
-	            "package": {
-	                "version": "master",
-	                "name": "SynergyGearman",
-	                "source": {
-	                    "type": "git",
-	                    "url": "https://github.com/mwillbanks/SynergyGearman",
-	                    "reference": "master"
-	                } 
-	            }
-
-	        }
+            "type": "vcs",
+            "url": "git@github.com:odiaseo/synergy-gearman.git"
 	    ],
 		"require": {
-		        "SynergyGearman": "master"
+		        "synergy/gearman": "master"
 		    }
     }
-
-*Git Submodule*
-
-* git submodule add [repo-url] ./vendor/SynergyGearman
-* add 'SynergyGearman' to your application.config.php file
-
+ 
 Usage
 -----
-
-*DI Configuration for Connection Handling*
-
-```
- 
-    <?php
-      return array(
-        'di' => array(
-        'instance' => array(
-            'SynergyGearman\Client\Pecl' => array(
-                'parameters' => array(
-                    'servers' => array(
-                        array('localhost'),
-                    ),
-                ),
-            ),
-            'SynergyGearman\Worker\Pecl' => array(
-                'parameters' => array(
-                    'servers' => array(
-                        array('localhost'),
-                    ),
-                ),
-            ),
-        ),
-       ),
-   );
-```
 
 *Submitting a Job to Gearman*
 
 ```
 
     <?php
-    $gearman = $serviceMananger->get('SynergyGearman\Client\Pecl');
+    $gearman = $serviceMananger->get('german\client\pecl');
     $gearman->connect();
     
     $workload = 'some-string';
@@ -103,7 +52,7 @@ Usage
 ```
 
     <?php
-    $gearman = $serviceMananger->get('SynergyGearman\Worker\Pecl');
+    $gearman = $serviceMananger->get('gearman\worker\pecl');
     $gearman->register('myJob', 'handleJob');
     $gearman->connect();
     while($gearman->work());
@@ -114,7 +63,3 @@ Usage
     }
 
 ```
-Roadmap
--------
-* Integrate Net\_Gearman from PEAR
-* Integrate Zend\Console for a BaseWorker

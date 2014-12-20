@@ -1,2 +1,13 @@
-# Created by .gitignore support plugin (hsz.mobi)
+data/logs/*
+vendor/
 .idea/
+cache/*
+*.dat
+composer.lock
+robots.txt
+./revision.php
+sitemap/*
+*robots.txt
+robots.txt
+*.appcache
+vendor

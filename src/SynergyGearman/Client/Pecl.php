@@ -9,10 +9,12 @@
 
 namespace SynergyGearman\Client;
 
-use SynergyGearman\Connection\AbstractPecl;
+use GearmanClient;
+use GearmanTask;
 use SynergyGearman\ClientInterface;
-use SynergyGearman\TaskInterface;
+use SynergyGearman\Connection\AbstractPecl;
 use SynergyGearman\Exception;
+use SynergyGearman\TaskInterface;
 
 /**
  * Gearman PECL Client
@@ -54,12 +56,12 @@ class Pecl extends AbstractPecl implements ClientInterface
     /**
      * Get GearmanClient
      *
-     * @return \GearmanClient
+     * @return GearmanClient | ClientInterface
      */
     public function getGearmanClient()
     {
         if (!$this->client) {
-            $this->client = new \GearmanClient();
+            $this->client = new GearmanClient();
         }
 
         if ($this->timeout !== null) {
@@ -75,9 +77,10 @@ class Pecl extends AbstractPecl implements ClientInterface
      * Set GearmanClient
      *
      * @param \GearmanClient $client
+     *
      * @return Pecl
      */
-    public function setGearmanClient(\GearmanClient $client)
+    public function setGearmanClient(GearmanClient $client)
     {
         $this->client = $client;
         return $this;
@@ -87,7 +90,8 @@ class Pecl extends AbstractPecl implements ClientInterface
      * Add a Server
      *
      * @param string $host
-     * @param int $port
+     * @param int    $port
+     *
      * @return Pecl
      * @throws Exception\InvalidArgumentException
      */
@@ -129,7 +133,7 @@ class Pecl extends AbstractPecl implements ClientInterface
      */
     public function close()
     {
-        if ($this->client instanceof \GearmanClient) {
+        if ($this->client instanceof GearmanClient) {
             $this->client = null;
         }
         return parent::close();
@@ -139,6 +143,7 @@ class Pecl extends AbstractPecl implements ClientInterface
      * Set Timeout
      *
      * @param int $timeout
+     *
      * @return Pecl
      * @throws Exception\InvalidArgumentException
      */
@@ -151,12 +156,12 @@ class Pecl extends AbstractPecl implements ClientInterface
         return $this;
     }
 
-
     /**
      * Add Task
      * Add a task to be executed later with runTasks.
      *
      * @param \SynergyGearman\Task
+     *
      * @return Pecl
      */
     public function addTask(TaskInterface $task)
@@ -215,8 +220,8 @@ class Pecl extends AbstractPecl implements ClientInterface
             $this->connect();
         }
         $handles = array();
-        foreach ($this->tasks as $task)
-        {
+        /** @var GearmanTask | TaskInterface $task */
+        foreach ($this->tasks as $task) {
             $method = 'addTask';
             $method .= ucwords($task->getPriority());
             if ($task->isBackground()) {
@@ -234,7 +239,7 @@ class Pecl extends AbstractPecl implements ClientInterface
                 $context,
                 $task->getUnique()
             );
-            if ($task instanceof \GearmanTask) {
+            if ($task instanceof GearmanTask) {
                 $handles[] = $task->jobHandle();
             }
         }
@@ -256,6 +261,7 @@ class Pecl extends AbstractPecl implements ClientInterface
      * Set Context
      *
      * @param string $context
+     *
      * @return Pecl
      */
     public function setContext($context)
@@ -273,6 +279,7 @@ class Pecl extends AbstractPecl implements ClientInterface
      * Ping
      *
      * @param string $workload
+     *
      * @return bool
      */
     public function ping($workload)

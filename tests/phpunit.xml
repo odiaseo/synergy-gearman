@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="Bootstrap.php"
+         colors="true"
+         backupGlobals="false"
+         backupStaticAttributes="false"
+         timeoutForSmallTests="60"
+         timeoutForMediumTests="120"
+         timeoutForLargeTests="300"
+        >
+
+    <testsuites>
+        <testsuite name="Synergy Gearman Test Suite">
+            <directory suffix="Test.php">SynergyGearmanTest</directory>
+        </testsuite>
+    </testsuites>
+    <php>
+        <includePath>../src</includePath>
+        <includePath>../vendor</includePath>
+    </php>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">../src</directory>
+        </whitelist>
+    </filter>
+</phpunit>
