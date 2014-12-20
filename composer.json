@@ -1,0 +1,36 @@
+{
+  "name": "synergy/gearman",
+  "description": "A ZF2 modules that provides a gearman wrapper.",
+  "type": "library",
+  "keywords": [
+    "zf2",
+    "gearman",
+    "SynergyGearman"
+  ],
+  "homepage": "https://github.com/odiaseo/SynergyGearman.git",
+  "authors": [
+    {
+      "name": "Mike Willbanks",
+      "email": "mike@digitalstruct.com",
+      "homepage": "http://blog.digitalstruct.com/"
+    }
+  ],
+  "autoload": {
+    "psr-0": {
+      "SynergyGearman\\": "src/"
+    },
+    "classmap": [
+      "./"
+    ]
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "http://packages.zendframework.com/"
+    }
+  ],
+  "require": {
+    "php": ">=5.3.3",
+    "zendframework/zendframework": "2.*"
+  }
+}
